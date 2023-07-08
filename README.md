@@ -1,2 +1,2 @@
 # cpp
-My CPP samples
+My CPP samples are implemented here.
