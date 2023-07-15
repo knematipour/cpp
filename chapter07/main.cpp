@@ -1,6 +1,6 @@
 #include <iostream>
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    std::cout << "We are testing github webhooks here!" << std::endl;
     return 0;
 }
