@@ -1,1 +1,7 @@
-add_executable(cpp_samples  main.cpp crash_course.cpp stringView.cpp memoryManagement.cpp)
+add_executable(cpp_samples  
+    main.cpp 
+    crash_course.cpp 
+    stringView.cpp 
+    memoryManagement.cpp
+    objectsAndClassesBasics.cpp
+)

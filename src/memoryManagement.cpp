@@ -80,6 +80,13 @@ void test_unique_pointer()
     // we shall check this out again later.
 }
 
+class Foo
+{
+public:
+    Foo(int in) : data_{in} {};
+    int data_;
+};
+
 void test_shared_pointer()
 {
     // Simple use of shared pointer
@@ -94,10 +101,38 @@ void test_shared_pointer()
     // shared pointer also supports .get and .reset methods like unique pointer
 
     // uses reference counting to know when to free the resource that is points to
-    
+
     // creating another pointer from an existing one
     auto smartPointer1{std::make_shared<Simple>()};
     auto smartPointer2{smartPointer1};
+
+    // custom deleters shall be checked later on
+
+    // a technic called "aliasing" with shared pointers
+    // it is used to point to members of the class while maintaining a pointer to the calss obj
+    auto foo{std::make_shared<Foo>(42)};
+    auto aliasing{std::shared_ptr<int>{foo, &foo->data_}};
+}
+
+void useWeakPointer(std::weak_ptr<Simple> &in)
+{
+    auto resource{in.lock()}; // returns a shared pointer to the resource!
+    if(resource)
+    {
+        std::cout << "Resource allocated and being used!\n";
+    }else{
+        std::cout << "Resource Not allocated!\n";
+    }
+}
+
+void test_weak_pointer()
+{
+    auto p1{std::make_shared<Simple>()};
+    std::weak_ptr<Simple> p2{p1};
+
+    useWeakPointer(p2);
+    p1.reset();
+    useWeakPointer(p2);
 }
 
 void test_memory_management()
@@ -105,5 +140,6 @@ void test_memory_management()
     // test_basic();
     // test_arrays();
     // test_unique_pointer();
-    test_shared_pointer();
+    // test_shared_pointer();
+    test_weak_pointer();
 }
