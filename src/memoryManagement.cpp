@@ -1,4 +1,5 @@
 #include <iostream>
+#include <memory>
 
 void test_basic()
 {
@@ -26,6 +27,7 @@ class Simple
 public:
     Simple() { std::cout << "Object of class simple being constructed\n"; };
     ~Simple() { std::cout << "Object of class simple being destructed\n"; };
+    void go() { std::cout << "Object of class simple going ...\n"; };
 };
 
 void test_arrays()
@@ -52,13 +54,56 @@ void test_arrays()
     // automatic array
     Simple myObjectArray[3];
 
-    Simple *oArray { new Simple[3]};
+    Simple *oArray{new Simple[3]};
     delete[] oArray;
     oArray = nullptr;
 }
 
+void test_unique_pointer()
+{
+    // unique_pointer uses value initialization. Basic types are initialized to zero and objects are default-constructed.
+    // C++ 20 has make_new_for_overwrite() that does not have value initialization.
+    auto mySmartPointer{std::make_unique<Simple>()};
+    mySmartPointer->go();
+
+    // Calling the pointer by its constructor
+    std::unique_ptr<Simple> mySmarterPointer{new Simple{}};
+
+    mySmartPointer.reset();             // just resets the pointer
+    mySmartPointer.reset(new Simple{}); // free the old one and assigns to a new one
+
+    Simple *normalPointer{mySmarterPointer.release()}; // gets the ownership from smart pointer to the new pointer
+    delete normalPointer;
+    normalPointer = nullptr;
+
+    // unique_pointer cannot be copied but can be moved!
+    // we shall check this out again later.
+}
+
+void test_shared_pointer()
+{
+    // Simple use of shared pointer
+    std::shared_ptr<Simple> mySharedPointer{std::make_shared<Simple>()};
+
+    // using auto to make a shared pointer
+    auto myOtherSharedPointer{std::make_shared<Simple>()};
+
+    // to not use value initialization, this can be used (C++ 20)
+    // auto myPointer {make_shared_for_overwrite<Simple>()};
+
+    // shared pointer also supports .get and .reset methods like unique pointer
+
+    // uses reference counting to know when to free the resource that is points to
+    
+    // creating another pointer from an existing one
+    auto smartPointer1{std::make_shared<Simple>()};
+    auto smartPointer2{smartPointer1};
+}
+
 void test_memory_management()
 {
-    test_basic();
-    test_arrays();
+    // test_basic();
+    // test_arrays();
+    // test_unique_pointer();
+    test_shared_pointer();
 }
