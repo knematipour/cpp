@@ -1,101 +1,31 @@
+#include "SpreadsheetCell.hpp"
+
 #include <iostream>
 #include <string>
 #include <string_view>
-#include <charconv>
 #include <memory>
 #include <typeinfo>
 
-class SpreadsheetCell
+// defining class to avoid compile error
+class Foo;
+
+class Bar
 {
-public:
-    // changed for providing multiple constructors
-    // defauld constructor is provided ONLY when no constructor is defined!
-    // The problem called Most Vexing Parse
-    SpreadsheetCell() = default; // adds a compiler-generated default constructor to the class
-    // convetor constructor, can be marked explicit
-    SpreadsheetCell(double initialValue);
-    SpreadsheetCell(std::string_view initialValue);
-
-    // copy constructor is called when object is passed by value to a function
-    // Also called when object is returned by value from a funciton
-    // Also called when the compiler creates temporary objects(?)
-    // RVO or (Return Value Optimization)
-    SpreadsheetCell(const SpreadsheetCell &src);
-
-    void setValue(double value);
-    double getValue() const;
-
-    void setString(std::string_view str);
-    std::string getString() const;
-
-    // Assignment operator
-    SpreadsheetCell &operator=(const SpreadsheetCell &rhs);
-
-private:
-    std::string doubleToString(double d) const;
-    double stringToDouble(std::string_view s) const;
-    double m_value{0};
+    public:
+    void processFoo(Foo& foo);
 };
 
-// implementation of assignment operator
-SpreadsheetCell &SpreadsheetCell::operator=(const SpreadsheetCell &rhs)
+// friend classes and method break encapsulation so they should be avoided
+class Foo
 {
-    // to prevent copy unto itself
-    if (this == &rhs)
-    {
-        return *this;
-    }
+    friend class Bar; // declare a class as a friend 
+    friend void Bar::processFoo(Foo& foo); // declare a method of a class as a friend 
+    friend void printFoo(Foo& foo); // declare a standalone function as a friend 
+};
 
-    // always return *this
-    m_value = rhs.m_value;
-    return *this;
-}
-
-// copy constructor has access to the private data of the source object
-SpreadsheetCell::SpreadsheetCell(const SpreadsheetCell &src) : m_value{src.m_value}
+void printFoo(Foo& foo)
 {
-    std::cout << "copy constructor is called!\n";
-}
 
-SpreadsheetCell::SpreadsheetCell(double d) : m_value{d}
-{
-}
-
-SpreadsheetCell::SpreadsheetCell(std::string_view s)
-{
-    setString(s);
-}
-
-void SpreadsheetCell::setValue(double value)
-{
-    m_value = value;
-}
-
-double SpreadsheetCell::getValue() const
-{
-    return m_value;
-}
-
-void SpreadsheetCell::setString(std::string_view str)
-{
-    m_value = stringToDouble(str);
-}
-
-std::string SpreadsheetCell::getString() const
-{
-    return doubleToString(m_value);
-}
-
-std::string SpreadsheetCell::doubleToString(double d) const
-{
-    return std::to_string(m_value);
-}
-
-double SpreadsheetCell::stringToDouble(std::string_view str) const
-{
-    double number{0};
-    std::from_chars(str.data(), str.data() + str.size(), number);
-    return number;
 }
 
 void test_classes_basics()
@@ -141,6 +71,5 @@ void test_classes_basics()
     // this is where very important "COPY ELISION" by compiler kicks in 
     // this line calls the copy constructor for the temp opbject and the copy constructor for s2 
     std::string s2 = c4.getString();
-
 
 }

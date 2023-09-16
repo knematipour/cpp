@@ -4,4 +4,6 @@ add_executable(cpp_samples
     stringView.cpp 
     memoryManagement.cpp
     objectsAndClassesBasics.cpp
+    SpreadsheetCell.cpp
+    advancedClasses.cpp
 )
