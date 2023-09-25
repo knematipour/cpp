@@ -4,15 +4,13 @@
 #include <cstring>
 #include <iomanip>
 
-void test_string_literals()
-{
+void test_string_literals() {
     char *ptr{"hello"};            // causes compiler warning
     ptr[1] = 'o';                  // creates undefined behavior, compiler warning about converting string constant to char*
     std::cout << ptr << std::endl; // causes "segmentation fault"
 }
 
-void test_raw_string_literals()
-{
+void test_raw_string_literals() {
     const char *str1{R"(Hello "World!"!)"};
     std::cout << str1 << "\n";
 
@@ -23,23 +21,18 @@ void test_raw_string_literals()
     std::cout << str2 << "\n";
 }
 
-void test_std_string()
-{
+void test_std_string() {
     std::string a{"123"};
     std::string b{"345"};
     std::string c{"123"};
 
-    if (a == b)
-    {
+    if (a == b) {
         std::cout << "will never print this!\n";
-    }
-    else
-    {
+    } else {
         std::cout << "will always print this!\n";
     }
 
-    if (!a.compare(c))
-    {
+    if (!a.compare(c)) {
         std::cout << "this will be printed!\n";
     }
     std::cout << a + b << "\n";
@@ -56,19 +49,16 @@ void test_std_string()
     std::cout << "si: " << si << "\n";
 }
 
-void test_strtok()
-{
+void test_strtok() {
     char input[100] = "A bird came down the walk";
     char *token = std::strtok(input, " "); // return pointer to first character that is not in delim (second parameter)
-    while (token != NULL)
-    {
+    while (token != NULL) {
         std::cout << std::quoted(token) << '\n';
         token = std::strtok(NULL, " "); // second call with NULL means use the same input as before.
     }
 }
 
-void test_c_str()
-{
+void test_c_str() {
     std::string str{"Hi there, this is Kaveh!"};
 
     // created an array big enough to store the new array
@@ -76,20 +66,17 @@ void test_c_str()
     std::strcpy(strArray, str.c_str()); // copying the c_str to the new array
 
     char *p = std::strtok(strArray, " ");
-    while (p != NULL)
-    {
+    while (p != NULL) {
         std::cout << p << "\n";
         p = std::strtok(NULL, " ");
     }
     delete[] strArray;
 }
 
-void test_string_utilities()
-{
+void test_string_utilities() {
     std::string str{"Kaveh is here!"};
 
-    if (str.find("a") != std::string::npos)
-    {
+    if (str.find("a") != std::string::npos) {
         std::cout << "Found!\n";
     }
     std::string sub{str.substr(1)};
@@ -99,19 +86,16 @@ void test_string_utilities()
     std::cout << sub << "\n";
 }
 
-void printString(std::string_view str)
-{
+void printString(std::string_view str) {
     std::cout << str << "\n";
 }
 
-void test_string_view()
-{
+void test_string_view() {
     std::string_view str{"Hello World!"};
     printString(str);
 }
 
-void string_view_test()
-{
+void string_view_test() {
     // test_string_literals();
     // test_raw_string_literals();
     test_std_string();

@@ -6,4 +6,5 @@ add_executable(cpp_samples
     objectsAndClassesBasics.cpp
     SpreadsheetCell.cpp
     advancedClasses.cpp
+    Spreadsheet.cpp
 )

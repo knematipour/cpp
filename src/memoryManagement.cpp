@@ -1,17 +1,15 @@
 #include <iostream>
 #include <memory>
 
-void test_basic()
-{
+void test_basic() {
     // Automatic variable. deleted when the program leaves the scope.
     int i{7};
 
     // creating an integer in free-store memory (Heap)
     int *pi = new int;
     int *pi1{new int};
-    int *pi2{new (std::nothrow) int}; // if the allocation fails, return nullptr
-    if (pi2 != nullptr)
-    {
+    int *pi2{new(std::nothrow) int}; // if the allocation fails, return nullptr
+    if (pi2 != nullptr) {
         std::cout << "memory allocated successfully!\n";
     }
 
@@ -22,21 +20,21 @@ void test_basic()
     pi1 = nullptr;
 }
 
-class Simple
-{
+class Simple {
 public:
     Simple() { std::cout << "Object of class simple being constructed\n"; };
+
     ~Simple() { std::cout << "Object of class simple being destructed\n"; };
+
     void go() { std::cout << "Object of class simple going ...\n"; };
 };
 
-void test_arrays()
-{
+void test_arrays() {
     // test bascic-type arrays
     int myIntArray[]{1, 2, 3, 4, 5};
 
     // basic-type array on the heap
-    int *otherIntArray{new (std::nothrow) int[5]};
+    int *otherIntArray{new(std::nothrow) int[5]};
     // this line only works with c++ 20
     // int *anotherIntArray {new int[]{1, 2, 3, 4, 5}};
     // it works like this
@@ -59,8 +57,7 @@ void test_arrays()
     oArray = nullptr;
 }
 
-void test_unique_pointer()
-{
+void test_unique_pointer() {
     // unique_pointer uses value initialization. Basic types are initialized to zero and objects are default-constructed.
     // C++ 20 has make_new_for_overwrite() that does not have value initialization.
     auto mySmartPointer{std::make_unique<Simple>()};
@@ -80,15 +77,13 @@ void test_unique_pointer()
     // we shall check this out again later.
 }
 
-class Foo
-{
+class Foo {
 public:
     Foo(int in) : data_{in} {};
     int data_;
 };
 
-void test_shared_pointer()
-{
+void test_shared_pointer() {
     // Simple use of shared pointer
     std::shared_ptr<Simple> mySharedPointer{std::make_shared<Simple>()};
 
@@ -114,19 +109,16 @@ void test_shared_pointer()
     auto aliasing{std::shared_ptr<int>{foo, &foo->data_}};
 }
 
-void useWeakPointer(std::weak_ptr<Simple> &in)
-{
+void useWeakPointer(std::weak_ptr<Simple> &in) {
     auto resource{in.lock()}; // returns a shared pointer to the resource!
-    if(resource)
-    {
+    if (resource) {
         std::cout << "Resource allocated and being used!\n";
-    }else{
+    } else {
         std::cout << "Resource Not allocated!\n";
     }
 }
 
-void test_weak_pointer()
-{
+void test_weak_pointer() {
     auto p1{std::make_shared<Simple>()};
     std::weak_ptr<Simple> p2{p1};
 
@@ -135,8 +127,7 @@ void test_weak_pointer()
     useWeakPointer(p2);
 }
 
-void test_memory_management()
-{
+void test_memory_management() {
     // test_basic();
     // test_arrays();
     // test_unique_pointer();
