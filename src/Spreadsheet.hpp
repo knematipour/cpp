@@ -12,9 +12,13 @@ class Spreadsheet {
 public:
     Spreadsheet(size_t width, size_t height);
 
+    Spreadsheet(const Spreadsheet &source);
+
     void setCellAt(size_t x, size_t y, const SpreadsheetCell &cell);
 
     SpreadsheetCell &getCellAt(size_t x, size_t y);
+
+    Spreadsheet &operator=(const Spreadsheet &rhs);
 
     ~Spreadsheet();
 

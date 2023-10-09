@@ -1,11 +1,13 @@
 # create an exe file for testing, adding the library to it for test. Nothing special here. 
 add_executable(test_cpp "")
 target_sources(test_cpp
-    PRIVATE
-    test.cpp
+        PRIVATE
+        test.cpp
+        ../src/Spreadsheet.cpp
+        ../src/SpreadsheetCell.cpp
 )
 target_link_libraries(test_cpp gtest_main)
 
 add_test(
-    NAME test_cpp
-    COMMAND $<TARGET_FILE:test_cpp>)
+        NAME test_cpp
+        COMMAND $<TARGET_FILE:test_cpp>)
