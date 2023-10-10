@@ -20,10 +20,16 @@ public:
 
     Spreadsheet &operator=(const Spreadsheet &rhs);
 
+    Spreadsheet(Spreadsheet &&src) noexcept;
+
+    Spreadsheet &operator=(Spreadsheet &&rhs) noexcept;
+
     ~Spreadsheet();
 
 private:
     void verifyCoordinates(size_t x, size_t y) const;
+    void cleanup() noexcept;
+    void moveFrom(Spreadsheet& src) noexcept;
 
     size_t m_width{0};
     size_t m_height{0};

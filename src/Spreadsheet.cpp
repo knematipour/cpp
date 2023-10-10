@@ -77,3 +77,37 @@ Spreadsheet &Spreadsheet::operator=(const Spreadsheet &rhs) {
 
     return *this;
 }
+
+void Spreadsheet::cleanup() noexcept {
+    for (int i{0}; i < m_width; i++) {
+        delete[] m_cells[i];
+    }
+    delete[] m_cells;
+    m_cells = nullptr;
+    m_width = m_height = 0;
+}
+
+void Spreadsheet::moveFrom(Spreadsheet &src) noexcept {
+    m_height = src.m_height;
+    m_width = src.m_width;
+    m_cells = src.m_cells;
+
+    src.m_height = 0;
+    src.m_width = 0;
+    src.m_cells = nullptr;
+
+}
+
+Spreadsheet::Spreadsheet(Spreadsheet &&src) noexcept {
+    moveFrom(src);
+}
+
+Spreadsheet &Spreadsheet::operator=(Spreadsheet &&rhs) noexcept {
+    if (this == &rhs){
+        return *this;
+    }
+
+    cleanup();
+    moveFrom(rhs);
+    return *this;
+}

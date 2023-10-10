@@ -1,5 +1,6 @@
 #include "Spreadsheet.hpp"
 #include <iostream>
+#include <utility>
 
 // move semantics
 
@@ -74,13 +75,26 @@ void testMyClass() {
     c4 = c1;
     c4 = std::move(c2);
     c1 = myClassArgument(c4);
-    // this is a very interesting optimization.
+    // this is an example of copy elision. Object constructed in final destination. No Move!
     MyClass c5{myClassArgument(c1)};
     std::cout << "value or i received is: " << c5.i << std::endl;
 }
 
+
+void testExchange() {
+    int a{10};
+    int b{20};
+    int returnedValue{0};
+    // int returnedValue{std::exchange(a, b)};
+    b = std::exchange(a,b);
+    std::cout << "after the exchange the value of a is: " << a << " and the value of b is: " << b
+              << " and returned value: " << returnedValue << std::endl;
+}
+
+
 void test_advanced_classes() {
     //test_rvalue_call();
-    testMyClass();
+    // testMyClass();
 
+    testExchange();
 }
