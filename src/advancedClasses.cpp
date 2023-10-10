@@ -9,6 +9,36 @@
 // the purpose of an rvalue reference is to allow certain overloaded functions to be called when an
 //      rvalue is involved
 
+class MyClass {
+public:
+    MyClass(int i) : i{i} { std::cout << "ctor" << std::endl; }
+
+    ~MyClass() { std::cout << "dtor" << std::endl; }
+
+    MyClass(MyClass &c) : i{c.i} { std::cout << "copy ctor" << std::endl; }
+
+    MyClass &operator=(MyClass &c) {
+        std::cout << "assignment operator" << std::endl;
+        i = c.i;
+        return *this;
+    }
+
+    MyClass(MyClass &&rhs) : i{rhs.i} {
+        rhs.i = 0;
+        std::cout << "move ctor" << std::endl;
+    }
+
+    MyClass &operator=(MyClass &&rhs) {
+        std::cout << "move assignment" << std::endl;
+        i = rhs.i;
+        rhs.i = 0;
+        return *this;
+    }
+//    MyClass &operator=(MyClass &&rhs) = default;
+
+    int i;
+};
+
 void handleMessage(std::string &message) {
     std::cout << "Message handled from lvalue function: " << message << std::endl;
 }
@@ -29,9 +59,28 @@ void test_rvalue_call() {
     std::cout << std::boolalpha << str.empty() << std::endl;
 }
 
+MyClass myClassArgument(MyClass &c) {
+    std::cout << "-------> myClassArgument" << std::endl;
+    // MyClass c1{};
+    return MyClass{10};
+}
+
+void testMyClass() {
+    MyClass c1{20};
+    MyClass c2{c1};
+    MyClass c3{std::move(c1)};
+    std::cout << "value or i for c3 is: " << c3.i << std::endl;
+    MyClass c4{1};
+    c4 = c1;
+    c4 = std::move(c2);
+    c1 = myClassArgument(c4);
+    // this is a very interesting optimization.
+    MyClass c5{myClassArgument(c1)};
+    std::cout << "value or i received is: " << c5.i << std::endl;
+}
 
 void test_advanced_classes() {
-    std::cout << "Testing advanced classes\n";
-    test_rvalue_call();
-    // Spreadsheet sheet1{};
+    //test_rvalue_call();
+    testMyClass();
+
 }
