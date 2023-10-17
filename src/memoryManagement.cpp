@@ -104,7 +104,7 @@ void test_shared_pointer() {
     // custom deleters shall be checked later on
 
     // a technic called "aliasing" with shared pointers
-    // it is used to point to members of the class while maintaining a pointer to the calss obj
+    // it is used to point to members of the class while maintaining a pointer to the class obj
     auto foo{std::make_shared<Foo>(42)};
     auto aliasing{std::shared_ptr<int>{foo, &foo->data_}};
 }

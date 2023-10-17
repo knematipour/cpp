@@ -5,12 +5,14 @@
 #include "memoryManagement.hpp"
 #include "objectsAndClassesBasics.hpp"
 #include "advancedClasses.hpp"
+#include "inheritance.hpp"
 
 int main() {
     // crash_course();
     // string_view_test();
     // test_memory_management();
     // test_classes_basics();
-    test_advanced_classes();
+    // test_advanced_classes();
+    test_inheritance();
     return 0;
 }

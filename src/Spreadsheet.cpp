@@ -1,5 +1,7 @@
 #include "Spreadsheet.hpp"
 #include <stdexcept>
+#include <utility>
+#include <iostream>
 
 // basic implementation of the ctor
 Spreadsheet::Spreadsheet(size_t width, size_t height) : m_width{width}, m_height{height} {
@@ -7,6 +9,7 @@ Spreadsheet::Spreadsheet(size_t width, size_t height) : m_width{width}, m_height
     for (int i{0}; i < m_height; i++) {
         m_cells[i] = new SpreadsheetCell[m_height];
     }
+    std::cout << "normal constructor\n";
 }
 
 void Spreadsheet::verifyCoordinates(size_t x, size_t y) const {
@@ -35,15 +38,16 @@ Spreadsheet::~Spreadsheet() {
     }
     delete[] m_cells;
     m_cells = nullptr;
+    std::cout << "destructor\n";
 }
 
-// Calling the main constructor from here after the :
 Spreadsheet::Spreadsheet(const Spreadsheet &source) : Spreadsheet{source.m_width, source.m_height} {
     for (size_t i{0}; i < m_width; i++) {
         for (int j = 0; j < m_height; ++j) {
             m_cells[i][j] = source.m_cells[i][j];
         }
     }
+    std::cout << "copy constructor\n";
 }
 
 // this version is not exception free. If the allocation goes wrong, the object is corrupted.
@@ -74,7 +78,7 @@ Spreadsheet &Spreadsheet::operator=(const Spreadsheet &rhs) {
             m_cells[i][j] = rhs.m_cells[i][j];
         }
     }
-
+    std::cout << "assignment operator\n";
     return *this;
 }
 
@@ -88,26 +92,24 @@ void Spreadsheet::cleanup() noexcept {
 }
 
 void Spreadsheet::moveFrom(Spreadsheet &src) noexcept {
-    m_height = src.m_height;
-    m_width = src.m_width;
-    m_cells = src.m_cells;
-
-    src.m_height = 0;
-    src.m_width = 0;
-    src.m_cells = nullptr;
+    m_height = std::exchange(src.m_height, 0);
+    m_width = std::exchange(src.m_width, 0);
+    m_cells = std::exchange(src.m_cells, nullptr);
 
 }
 
 Spreadsheet::Spreadsheet(Spreadsheet &&src) noexcept {
     moveFrom(src);
+    std::cout << "move constructor\n";
 }
 
 Spreadsheet &Spreadsheet::operator=(Spreadsheet &&rhs) noexcept {
-    if (this == &rhs){
+    if (this == &rhs) {
         return *this;
     }
 
     cleanup();
     moveFrom(rhs);
+    std::cout << "move assignment\n";
     return *this;
 }

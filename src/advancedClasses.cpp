@@ -1,6 +1,7 @@
 #include "Spreadsheet.hpp"
 #include <iostream>
 #include <utility>
+#include <vector>
 
 // move semantics
 
@@ -9,6 +10,23 @@
 // rvalue reference is a reference to a rvalue (temporary object or an object that is moved from with std::move)
 // the purpose of an rvalue reference is to allow certain overloaded functions to be called when an
 //      rvalue is involved
+
+// ref-qualifiers & after the method name means it is only called in non-temp objects and && means it is only called
+// on temp objects
+class TextHolder {
+public:
+    TextHolder(std::string text) : m_text{move(text)} {}
+
+    // method only called on non-temp objects
+    const std::string &getText() const &{ return m_text; }
+
+    // method only called on temp objects
+    std::string &&getText() &&{ return move(m_text); }
+
+private:
+    std::string m_text;
+};
+
 
 class MyClass {
 public:
@@ -86,15 +104,33 @@ void testExchange() {
     int b{20};
     int returnedValue{0};
     // int returnedValue{std::exchange(a, b)};
-    b = std::exchange(a,b);
+    b = std::exchange(a, b);
     std::cout << "after the exchange the value of a is: " << a << " and the value of b is: " << b
               << " and returned value: " << returnedValue << std::endl;
 }
 
+Spreadsheet createObject() {
+    Spreadsheet sheet1{3, 2};
+    return sheet1;
+}
 
 void test_advanced_classes() {
     //test_rvalue_call();
-    // testMyClass();
+    testMyClass();
+    // testExchange();
 
-    testExchange();
+//    std::vector<Spreadsheet> vec1;
+//
+//    for (size_t i{0}; i < 2; ++i) {
+//        std::cout << "iteration " << i << "\n";
+//        vec1.push_back(Spreadsheet{10, 10});
+//    }
+//    std::cout << "----------------\n";
+//    Spreadsheet s1{1, 2};
+//    s1 = createObject();
+//    Spreadsheet s2{5, 5};
+//    s2 = s1;
+//    // checkout RVO and NRVO
+//    Spreadsheet s3 {createObject()}; // copy elision
+
 }

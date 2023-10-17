@@ -7,4 +7,5 @@ add_executable(cpp_samples
     SpreadsheetCell.cpp
     advancedClasses.cpp
     Spreadsheet.cpp
+    inheritance.cpp
 )
