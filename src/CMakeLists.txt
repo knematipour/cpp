@@ -8,4 +8,10 @@ add_executable(cpp_samples
     advancedClasses.cpp
     Spreadsheet.cpp
     inheritance.cpp
+    NewSpreadsheetCell.cpp
+    NewSpreadsheetCell.h
+    testGenerics.cpp
+    testGenerics.h
+    Grid.cpp
+    Grid.h
 )

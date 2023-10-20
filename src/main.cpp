@@ -6,6 +6,7 @@
 #include "objectsAndClassesBasics.hpp"
 #include "advancedClasses.hpp"
 #include "inheritance.hpp"
+#include "testGenerics.h"
 
 int main() {
     // crash_course();
@@ -13,6 +14,7 @@ int main() {
     // test_memory_management();
     // test_classes_basics();
     // test_advanced_classes();
-    test_inheritance();
+    // test_inheritance();
+    testGenerics();
     return 0;
 }

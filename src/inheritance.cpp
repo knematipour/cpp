@@ -3,6 +3,7 @@
 #include <iomanip>
 #include <charconv>
 #include <chrono>
+#include "NewSpreadsheetCell.h"
 
 // important points to remember
 // if the virtual keyword is not used, the derived class is going to hide the base method, not override it
@@ -25,6 +26,19 @@
 // 1. the body of the destructor is called
 // 2. members of the class are destructed
 // 3. parent destructor is called
+
+
+// Multiple inheritance is used for:
+// mixin classes
+// model a component-based class
+
+// C++ supports 5 types of casts:
+// const_cast()
+// static_cast()
+// reinterpret_cast()
+// dynamic_cast()
+// std::bit_cast() (since C++ 20)
+
 class BaseClass {
 public:
     BaseClass() {
@@ -154,39 +168,127 @@ void testChrono() {
     auto today_t = std::chrono::system_clock::to_time_t(today);
     std::cout << "The current time is: " << std::ctime(&today_t) << std::endl;
 
+}
+
+void testSpreadsheetCell() {
+
+    // showcasing polymorphism with inherited classes
+    std::vector<std::unique_ptr<NewSpreadsheetCell>> vec1;
+    vec1.push_back(std::make_unique<StringSpreadsheetCell>());
+    vec1.push_back(std::make_unique<StringSpreadsheetCell>());
+    vec1.push_back(std::make_unique<DoubleSpreadsheetCell>());
+
+    vec1[0]->set("10");
+    vec1[1]->set("Hello World!");
+    vec1[2]->set("20");
+
+    std::cout << "The value stored is vec[2] is : " << vec1[2]->getString() << std::endl;
+
+
+}
+
+class Base {
+public:
+    virtual ~Base() = default;
+};
+
+class Derived : public Base {
+public:
+    virtual ~Derived() = default;
+};
+
+class X {
+};
+
+class Y {
+};
+
+void test_Casts() {
+    // static_cast: used for explicit conversions that are supported by the language
+    int i{3};
+    double d{static_cast<double>(i)};
+    std::cout << "Value of d: " << d << std::endl;
+
+    Base *pb{nullptr};
+    Derived *pd{new Derived{}};
+
+    pb = pd; // does not need a casting
+    pd = static_cast<Derived *>(pb); // needed casting to go down the hierarchy
+
+    Base base;
+    Derived derived;
+    Base &br{derived};
+    Derived &dr{static_cast<Derived &>(br)};
+
+    X x{};
+    Y y{};
+    X *xp{&x};
+    Y *yp{&y};
+    // case does not make sense but works!
+    xp = reinterpret_cast<X *>(yp);
+    // no cast needed
+    void *vp{xp};
+
+    // cast needed from void* back to its original
+    xp = reinterpret_cast<X *>(vp);
+
+    X &xr{x};
+    Y &yr{y};
+    // static cast does not work since the types are related (no inheritance)
+    xr = reinterpret_cast<X &>(yr);
+
+    float asFloat{3.14f};
+    auto asUint{std::bit_cast<unsigned int>(asFloat)};
+    if (std::bit_cast<float>(asUint) == asFloat) {
+        std::cout << "Cast was successful!" << std::endl;
+
+    }
+
+    Base b1;
+    Derived d1;
+    Base &br1{b1};
+    try {
+        Derived &dr1{dynamic_cast<Derived &>(br1)};
+    } catch (const std::bad_cast &) {
+        std::cout << "Bad Cast!" << std::endl;
+
+    }
+
 
 }
 
 void test_inheritance() {
     std::cout << "test inheritance capabilities\n";
-    DerivedClass dobj1;
-    dobj1.someOtherMethod();
-    dobj1.someMethod();
-
-    BaseClass &bobj1{dobj1};
-    bobj1.methodToOverride();
-
-    // calls the copy constructor of the base class. if there is none, calls the normal constructor
-    BaseClass bobj2{dobj1};
-    bobj2.methodToOverride();
-
-    DerivedClass dobj3{20};
+//    DerivedClass dobj1;
+//    dobj1.someOtherMethod();
+//    dobj1.someMethod();
+//
+//    BaseClass &bobj1{dobj1};
+//    bobj1.methodToOverride();
+//
+//    // calls the copy constructor of the base class. if there is none, calls the normal constructor
+//    BaseClass bobj2{dobj1};
+//    bobj2.methodToOverride();
+//
+//    DerivedClass dobj3{20};
 
     // testClamp();
     // testSetW();
     // testiStringStream();
     // testCasting();
 
-    std::string str1{"3.14"};
-    std::istringstream is{str1};
-    double d;
-    is >> d;
-    std::cout << "value of d: " << d << std::endl;
+//    std::string str1{"3.14"};
+//    std::istringstream is{str1};
+//    double d;
+//    is >> d;
+//    std::cout << "value of d: " << d << std::endl;
+//
+//    std::string str2{"4.12"};
+//    std::from_chars(str2.data(), str2.data() + str2.size(), d);
+//    std::cout << "value of d: " << d << std::endl;
 
-    std::string str2{"4.12"};
-    std::from_chars(str2.data(), str2.data() + str2.size(), d);
-    std::cout << "value of d: " << d << std::endl;
 
-
-    testChrono();
+    // testChrono();
+    // testSpreadsheetCell();
+    test_Casts();
 }
