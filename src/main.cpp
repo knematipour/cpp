@@ -7,6 +7,7 @@
 #include "advancedClasses.hpp"
 #include "inheritance.hpp"
 #include "testGenerics.h"
+#include "testIOStreams.h"
 
 int main() {
     // crash_course();
@@ -15,6 +16,8 @@ int main() {
     // test_classes_basics();
     // test_advanced_classes();
     // test_inheritance();
-    testGenerics();
+    // testGenerics();
+    testIOStreams();
+
     return 0;
 }

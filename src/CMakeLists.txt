@@ -14,4 +14,6 @@ add_executable(cpp_samples
     testGenerics.h
     Grid.cpp
     Grid.h
+        testIOStreams.cpp
+        testIOStreams.h
 )

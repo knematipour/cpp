@@ -198,11 +198,11 @@ void crash_course() {
     test_pair();
     std::optional<int> data1{test_optional(true)};
     if (data1.has_value()) {
-        std::cout << "the value of the optinal is for true is: " << data1.value() << "\n";
+        std::cout << "the value of the optional is for true is: " << data1.value() << "\n";
     }
     std::optional<int> data2{test_optional(false)};
     if (!data2.has_value()) {
-        // this line throws an std::bad_optional_access exception!
+        // this line throws a std::bad_optional_access exception!
         // std::cout << "the value of the optinal is for false is: " << data2.value() << "\n";
 
         std::cout << "the value of the optinal is for false is: " << data2.value_or(0) << "\n";
