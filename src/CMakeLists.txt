@@ -16,4 +16,6 @@ add_executable(cpp_samples
     Grid.h
         testIOStreams.cpp
         testIOStreams.h
+        testIterators.cpp
+        testIterators.h
 )

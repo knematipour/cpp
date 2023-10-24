@@ -1,0 +1,6 @@
+#ifndef CPP_SAMPLES_TESTITERATORS_H
+#define CPP_SAMPLES_TESTITERATORS_H
+
+void testIterators();
+
+#endif //CPP_SAMPLES_TESTITERATORS_H
