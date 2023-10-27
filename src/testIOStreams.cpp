@@ -59,14 +59,11 @@ void testIOStreams() {
 //    std::cout << "Hello " << str1 << std::endl;
 
     std::ofstream ofstream{"test.txt", std::ios_base::trunc};
-    if (!ofstream.good()){
+    if (!ofstream.good()) {
         std::cerr << "Error opening the file!\n";
         return;
     }
 
     std::cout << "Writing to file!" << std::endl;
-    
     ofstream << "First line of text written to a file!\n";
-
-
 }
