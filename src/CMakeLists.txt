@@ -18,4 +18,6 @@ add_executable(cpp_samples
         testIOStreams.h
         testIterators.cpp
         testIterators.h
+        testContainers.cpp
+        testContainers.h
 )

@@ -9,6 +9,7 @@
 #include "testGenerics.h"
 #include "testIOStreams.h"
 #include "testIterators.h"
+#include "testContainers.h"
 
 int main() {
     // crash_course();
@@ -19,7 +20,8 @@ int main() {
     // test_inheritance();
     // testGenerics();
     // testIOStreams();
-    testIterators();
+    // testIterators();
+    testContainers();
 
     return 0;
 }

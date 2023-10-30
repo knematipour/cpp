@@ -12,6 +12,9 @@
 
 // general sources are: console, file, strings
 
+// an output stream is a DESTINATION for bytes (ostream, ofstream, ostringstream) stream << variable
+// an input string is a SOURCE of bytes (istream, ifstream, istringstream) stream >> variable
+
 std::string readName(std::istream &stream) {
     std::string name;
     while (stream) { // Or: while (!stream.fail()) {
@@ -23,6 +26,23 @@ std::string readName(std::istream &stream) {
     return name;
 }
 
+void testReadingFileContent() {
+    std::cout << "\n--------------------------------\n";
+
+    std::ifstream ifstream("test.txt");
+    if (!ifstream.good()) {
+        std::cerr << "File NOT opened!\n";
+        return;
+    }
+    std::string line;
+    while (std::getline(ifstream, line)) {
+        std::istringstream oss{line};
+        std::string first_word;
+        oss >> first_word;
+        std::cout << first_word << std::endl;
+    }
+    ifstream.close();
+}
 
 void testIOStreams() {
     std::cout << "Test IO Streams" << std::endl;
@@ -36,14 +56,12 @@ void testIOStreams() {
     // check is the stream is ready
     if (std::cout.good()) {
         std::cout << "Stream is good to go!" << std::endl;
-
     }
 
     std::cout << "abc\n";
     std::cout.flush();
     if (std::cout.fail()) {
         std::cerr << "Flushing the buffer failed!\n" << std::endl; // normally not printed!
-
     }
 
     // stream manipulators
@@ -66,4 +84,7 @@ void testIOStreams() {
 
     std::cout << "Writing to file!" << std::endl;
     ofstream << "First line of text written to a file!\n";
+    ofstream.close();
+
+    testReadingFileContent();
 }
