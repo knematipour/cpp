@@ -10,6 +10,7 @@
 #include "testIOStreams.h"
 #include "testIterators.h"
 #include "testContainers.h"
+#include "testFunctionPointers.h"
 
 int main() {
     // crash_course();
@@ -21,7 +22,8 @@ int main() {
     // testGenerics();
     // testIOStreams();
     // testIterators();
-    testContainers();
+    // testContainers();
+    testFunctionPointers();
 
     return 0;
 }

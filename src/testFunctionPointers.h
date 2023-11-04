@@ -1,0 +1,7 @@
+#ifndef CPP_SAMPLES_TESTFUNCTIONPOINTERS_H
+#define CPP_SAMPLES_TESTFUNCTIONPOINTERS_H
+
+
+void testFunctionPointers();
+
+#endif

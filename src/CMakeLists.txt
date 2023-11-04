@@ -20,4 +20,6 @@ add_executable(cpp_samples
         testIterators.h
         testContainers.cpp
         testContainers.h
+        testFunctionPointers.cpp
+        testFunctionPointers.h
 )
