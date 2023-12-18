@@ -112,7 +112,7 @@ void testLambda() {
 
     auto var{1};
     auto lambdaChange{[&var]() { var = var + 2; }};
-    lambdaChange(); 
+    lambdaChange();
     std::cout << "Value doubled! " << var << std::endl;
 
 

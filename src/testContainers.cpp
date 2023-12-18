@@ -252,7 +252,6 @@ void testSet() {
     std::cout << std::endl;
     std::cout << "The element [10] exists in the set: " << s1.count(10);
 
-
 }
 
 void testContainers() {

@@ -15,11 +15,11 @@
 //      Input, Output, Forward, Bidirectional, Random Access, Contiguous
 
 // all containers support following iterators:
-// being: iterator pointing to the beginning of the container
+// begin: iterator pointing to the beginning of the container
 // end: iterator to one past the last element of the container
-// cbeing and : constant version of begin and end
-// rbeing: reverse version of begin and end
-// crbegin and crend: constant versions of rbeing and rend
+// cbegin and : constant version of begin and end
+// rbegin: reverse version of begin and end
+// crbegin and crend: constant versions of rbegin and rend
 // <iterator> supports the respective functions for the above iterators
 // using std::begin is recommended to benefit from ADL
 // std::distance() calculates the distance between two iterators in a container

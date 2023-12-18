@@ -11,6 +11,8 @@
 #include "testIterators.h"
 #include "testContainers.h"
 #include "testFunctionPointers.h"
+#include "testAlgorithms.h"
+#include "testRegex.h"
 
 int main() {
     // crash_course();
@@ -22,8 +24,10 @@ int main() {
     // testGenerics();
     // testIOStreams();
     // testIterators();
-    // testContainers();
-    testFunctionPointers();
+     testContainers();
+    // testFunctionPointers();
+    // testAlgorithms();
+    // testRegex();
 
     return 0;
 }

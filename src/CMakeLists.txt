@@ -22,4 +22,8 @@ add_executable(cpp_samples
         testContainers.h
         testFunctionPointers.cpp
         testFunctionPointers.h
+        testAlgorithms.cpp
+        testAlgorithms.h
+        testRegex.cpp
+        testRegex.h
 )
